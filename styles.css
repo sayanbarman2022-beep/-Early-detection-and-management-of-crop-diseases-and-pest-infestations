@@ -477,3 +477,8 @@ select option { background: var(--paper); color: var(--ink); }
   70% { box-shadow: 0 0 0 6px rgba(211, 47, 47, 0); }
   100% { box-shadow: 0 0 0 0 rgba(211, 47, 47, 0); }
 }
+/* Fix Leaflet map tile rendering in production */
+.leaflet-container img {
+  max-width: none !important;
+  max-height: none !important;
+}
