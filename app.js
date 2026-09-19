@@ -1384,3 +1384,28 @@ document.getElementById("removeAudioBtn")?.addEventListener("click", () => {
 
 // Run Init
 initApp();
+async function fetchSoilHealth() {
+    try {
+        const response = await fetch('https://khet-ai-m9n1.onrender.com/soil-health');
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        // Update Moisture
+        document.getElementById('moisture-display').innerText = data.moisture;
+        
+        // Convert Kelvin to Celsius and round to 1 decimal place
+        const tempCelsius = (data.t0 - 273.15).toFixed(1);
+        document.getElementById('temp-display').innerText = tempCelsius;
+        
+    } catch (error) {
+        console.error("Failed to connect to the backend:", error);
+        document.getElementById('moisture-display').innerText = "Error";
+        document.getElementById('temp-display').innerText = "Error";
+    }
+}
+
+fetchSoilHealth();
