@@ -1046,6 +1046,7 @@ function escapeHtml(str){
 }
 
 /* ===================== VIEW & LANGUAGE SWITCHERS ===================== */
+const originalSwitchView=switchView;
 function switchView(view){
   currentView = view;
   document.querySelectorAll(".view-btn").forEach(b=>b.classList.toggle("active", b.dataset.view===view));
@@ -1057,8 +1058,13 @@ function switchView(view){
   if(view === "officer" && currentOfficerUser){
     renderOfficerDash();
     initOrUpdateMap();
+    setTimeout(()=>{
+      if(mapInstance){
+        mapInstance.invalidateSize();
+      }
+    },250);
   }
-}
+};
 
 function applyStaticText(){
   document.querySelectorAll("[data-i18n]").forEach(el=>{
